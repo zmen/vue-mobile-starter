@@ -1,12 +1,17 @@
 import axios from 'axios';
+import MockAdapter from 'axios-mock-adapter';
 
-const { CancelToken } = axios.CancelToken;
 const axiosPromises = {};
 
 const timeout = 5000;
 const baseURL = '';
 
+let mock;
+if (process.env.NODE_ENV === 'test') {
+  mock = new MockAdapter(axios, { delayResponse: 500 });
+}
 const axiosInstance = axios.create({ timeout, baseURL });
+const { CancelToken } = axios;
 
 /**
  * 调用axios实例发送请求，参数类型参考axios官方文档
@@ -22,10 +27,29 @@ const request = (options) => {
   return axiosInstance(newOptions);
 };
 
-const delegateMethods = ['get', 'post', 'delete', 'head', 'options', 'put', 'patch'];
-delegateMethods.forEach((method) => {
+/* 兼容axios原有方法 */
+const methodsWithNoData = ['delete', 'get', 'head', 'options'];
+methodsWithNoData.forEach((method) => {
   Object.defineProperty(request, method, {
-    get() { return axiosInstance[method]; },
+    get() {
+      return (url, config) => request(Object.assign(config || {}, {
+        url,
+        method,
+      }));
+    },
+  });
+});
+
+const methodsWithData = ['post', 'put', 'patch'];
+methodsWithData.forEach((method) => {
+  Object.defineProperty(request, method, {
+    get() {
+      return (url, data, config) => request(Object.assign(config || {}, {
+        method,
+        url,
+        data,
+      }));
+    },
   });
 });
 
@@ -64,6 +88,7 @@ function addResponseInterceptors(responseHandler, errorHandler) {
 }
 
 export default {
+  mock,
   request,
   cancelRequest,
   addRequestInterceptors,
