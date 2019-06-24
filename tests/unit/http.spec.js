@@ -13,7 +13,6 @@ mock.onGet('/user', { params: { text: 'foo' } }).reply(200, { name: 'foo' });
 mock.onGet('/user', { params: { text: 'bar' } }).reply(200, { name: 'bar' });
 
 describe('request test', () => {
-
   it('should have the same methods as axios instance', () => {
     expect(typeof request.get).toBe('function');
     expect(typeof request.post).toBe('function');
