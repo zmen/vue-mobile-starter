@@ -1,10 +1,11 @@
 import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
-import store from './store';
+import store from './vuex';
 import '@/styles/main.scss';
+import '@/styles/base.scss';
 
-import registerBaseComponent from '@/components/base/';
+import registerBaseComponent from '@/components/base';
 
 registerBaseComponent(Vue);
 

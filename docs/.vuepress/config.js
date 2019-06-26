@@ -13,6 +13,7 @@ module.exports = {
     ],
     sidebar: [
       '/guide/structure.md',
+      '/guide/features.md',
       '/guide/component.md',
       '/guide/development.md',
       '/guide/questions.md',

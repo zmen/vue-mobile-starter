@@ -5,10 +5,4 @@
 @import "modules/function";
 @import "modules/measurement";
 
-// 通用样式
-@import "partials/reset";
-@import "partials/common";
-
-// 引入第三方类库的样式文件
-// 以及需要手动覆盖类库样式的文件
-@import "vendors/icon";
+@import "partials/button";
