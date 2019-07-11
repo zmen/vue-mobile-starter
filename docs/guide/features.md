@@ -2,18 +2,23 @@
 
 ## 路由配置
 
-路由配置文件位于`/src/router.js`中，配置方式没有做多大修改，使用传统的配置方式即可。
-
-按需加载路由使用webpack dynamic import的方式实现，如下：
+路由配置文件位于`/src/router/`文件夹中。
+借助[webpack:require-context](https://webpack.js.org/guides/dependency-management/#requirecontext)实现自动加载。
+新增路由时，在该目录下新建文件/文件夹即可，具体配置方式参见样例文件。
 
 ```javascript
-export default new Router({
-  routes: [{
-    path: '/',
-    name: 'home',
-    component: () => import(/* webpackChunkName: "about" */'./views/About.vue')
-  }]
-})
+export default [{
+  path: '/about',
+  name: 'about',
+  component: () => import(/* webpackChunkName: "about"*/'./views/About.vue'),
+}];
+```
+
+开发时，可根据需要决定编译的业务模块，以加快构建速度。
+例如，开发时如果仅涉及模块A与模块B，为避免构建其它无关业务模块，可在`.env.local`文件中配置:
+
+```
+VUE_APP_LOAD_MODULES=A|B
 ```
 
 ## Vuex状态管理库配置

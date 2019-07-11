@@ -8,8 +8,8 @@
     </template>
     <template slot="footer">
       <div class="home__footer">
-        <div class="home__nav">Home</div>
         <div class="home__nav" @click="$router.push('/about')">About</div>
+        <div class="home__nav" @click="$router.push('/setting')">Settings</div>
       </div>
     </template>
   </common-layout>
