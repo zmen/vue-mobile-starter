@@ -70,3 +70,28 @@ VUE_APP_SECRET=secret // App代码中可以通过`process.env.VUE_APP_SECRET`访
 ```
 
 更多细节参见[vue-cli#environment-variables](https://cli.vuejs.org/guide/mode-and-env.html#environment-variables)
+
+
+## REM适配
+
+如需使用rem适配，建议引入以下几个插件：
+
+- [postcss-pxtorem](https://github.com/cuth/postcss-pxtorem) 将px转化为rem
+- [lib-flexible](https://github.com/amfe/lib-flexible) 设置rem基准值
+
+### 使用方式
+
+在`postcss.config.js`中，配置`postcss-pxtorem`插件：
+
+```javascript
+module.exports = {
+    plugins: {
+        'postcss-pxtorem': {
+            rootValue: 37.5, // 根据设计稿自行定义
+            propList: ['*']
+        }
+    }
+}
+```
+
+对于不需要转化为rem的单位，可以使用大写的`PX`代替
